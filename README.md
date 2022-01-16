@@ -3,7 +3,12 @@ This project is the final project of ZJUI ECE449 course. It's a batch effect cor
 
 >* Coworkers
 >* Dataset
->* 
+>* Program Usage
+>* Batch Effect & Batch Correction Models
+>* Method
+>* Experiment & Results
+>* Discussion
+>* Reference
 
 ## Coworkers' Information
 Yao Wentao - ZJUI Institute
@@ -61,6 +66,68 @@ The search of MNN pairs is based on the latent features extracted from our pre-t
 ### Loss Function 
 In our framework, we have two different losses. Reconstruction loss and batch loss. The batch loss is used to reduce the distance within a MNN pair. It is the Euclidean distance in the feature subspace in a batch of training data, as shown in the expression below. Here, for a training batch b, and the MNN pair k, we calculate the distance between this pair, and finally add all these distance together, as shown in the following expression:
 
-$L_batch=\sum^{k}$
+![equation 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/55d3f56399c01be12d46997f5e6b0b6277e60c69/image/eqn1.jpg)
 
 Also, we have another loss function, it is the reconstruction loss. The preprocessed data will be feed into the residual network. Since the residual network has the residual term and identity term. So, it is easy for this network to learn the identity function of the input value. The structure of the residual network is shown in the figure below:
+
+![framework 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/4902a4ed420d05c1c72ba69b9cd97efa7deb41ed/image/framework.jpg)
+
+In that case, this network will serve as a calibration for our generated data. The reconstruction loss is also the distance between the generated data and the original data, as shown in the expression below: 
+
+![equation 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/b88fa9745d791a7a2d61f81dd78d3055ca1d38bf/image/eqn2.jpg)
+
+So, here we have the final loss function, which is the linear combination of the batch loss and reconstruction loss. As shown in the expression below: 
+
+![equation 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/b88fa9745d791a7a2d61f81dd78d3055ca1d38bf/image/eqn3.jpg)
+
+## Experiment & Results
+### Results on Human's Data
+The result of our batch effect correction on human cells is shown below. 
+* Our Image
+![result 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/b88fa9745d791a7a2d61f81dd78d3055ca1d38bf/image/our%20human.jpg)
+* Image of scETM
+![result 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/b88fa9745d791a7a2d61f81dd78d3055ca1d38bf/image/original%20human.jpg)
+
+In each figure, the graph on the left shows the result of our classification, the one in the middle shows the distribution of data samples from all batches in different colors and the one on the right is the manually labelled ground truth. The original model can not eliminate the batch effect very well as the dots are distributed unevenly. In some area, the density of green dots are obviously higher than other colors. On the contrast, after our method is applied, the dots of different colors mixed together more evenly. It's also worth noting that the reason why the shape of distributions are different is that the data were normalized during pre-processing.
+
+* Our Results
+
+![result 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/b88fa9745d791a7a2d61f81dd78d3055ca1d38bf/image/our%20human%20result.jpg)
+* Results of scETM
+
+![result 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/b88fa9745d791a7a2d61f81dd78d3055ca1d38bf/image/original%20human%20result.jpg)
+
+(Higher the data, better the performance)
+
+### Results on Mice's Data
+The result of our batch effect correction on mouse cells is shown below. 
+* Our Image
+![result 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/b88fa9745d791a7a2d61f81dd78d3055ca1d38bf/image/our%20mouse.jpg)
+* Image of scETM
+
+![result 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/b88fa9745d791a7a2d61f81dd78d3055ca1d38bf/image/original%20mouse.jpg)
+The effect of batch effect correction is still obvious on the second data set of mice cells. The group of yellow and blue cells mixed together more evenly after applying our method. 
+* Our Results
+
+![result 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/b88fa9745d791a7a2d61f81dd78d3055ca1d38bf/image/our%20mouse%20result.jpg)
+* Results of scETM
+
+![result 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/b88fa9745d791a7a2d61f81dd78d3055ca1d38bf/image/orignal%20mouse%20result.jpg)
+
+Moreover, we got better clustering results on this dataset, with almost all ARI values higher than the origi5nal model. A preliminary guess is that as there are only two batches of data in this data set, the task of batch effect correction is simpler, and our model performed better in this case.
+
+## Discussion
+By applying our modified deep MNN model for data preprocessing, we get quite good results on removing batch effects and get somehow better performance on certain indicators. For our future work, we can firstly apply our methods on more datasets to verify its performance, we can also further improve the batch effect correction network, improving its efficiency, and we will also explore the scETM model, improving its interpretability.
+
+## Reference
+[1] Haghverdi, L., Lun, A., Morgan, M. et al. Batch effects in single-cell RNA-sequencing data are corrected by matching mutual nearest neighbors. Nat Biotechnol 36, 421–427 (2018). <https://doi.org/10.1038/nbt.4091>
+
+[2] Li, X., Wang, K., Lyu, Y. et al. Deep learning enables accurate clustering with batch effect removal in single-cell RNA-seq analysis. Nat Commun 11, 2338 (2020). <https://doi.org/10.1038/s41467-020-15851-3>
+
+[3] Zou Bin, Zhang Tongda, Zhou Ruilong, Jiang Xiaosen, Yang Huanming, Jin Xin, Bai Yong deepMNN: Deep Learning-Based Single-Cell RNA Sequencing Data Batch Correction Using Mutual Nearest Neighbors  10.3389/fgene.2021.708981
+
+[4] Shaham U, Stanton KP, Zhao J, Li H, Raddassi K, Montgomery R, Kluger Y. Removal of batch effects using distribution-matching residual networks. Bioinformatics. 2017 Aug 15;33(16):2539-2546. doi: 10.1093/bioinformatics/btx196. PMID: 28419223; PMCID: PMC5870543. 
+
+[5] Zhao, Y., Cai, H., Zhang, Z. et al. Learning interpretable cellular and gene signature embeddings from single-cell transcriptomic data. Nat Commun 12, 5261 (2021). <https://doi.org/10.1038/s41467-021-25534-2>
+
+[6] Mario Flores et al. Deep learning tackles single-cell analysis – A survey of deep learning for scRNA-seq analysis. <https://arxiv.org/abs/2109.12404>
