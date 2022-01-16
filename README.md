@@ -74,7 +74,7 @@ Also, we have another loss function, it is the reconstruction loss. The preproce
 
 In that case, this network will serve as a calibration for our generated data. The reconstruction loss is also the distance between the generated data and the original data, as shown in the expression below: 
 
-![equation 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/b88fa9745d791a7a2d61f81dd78d3055ca1d38bf/image/eqn2.jpg)
+![equation 图标](https://github.com/HiracharleFranklin/Batch-corrected-scETM/blob/b646824d9a5cada38cddb967107976ba52277722/image/eqn2.jpg)
 
 So, here we have the final loss function, which is the linear combination of the batch loss and reconstruction loss. As shown in the expression below: 
 
