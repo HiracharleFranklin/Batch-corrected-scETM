@@ -1,7 +1,7 @@
 # Batch-corrected scETM
 This project is the final project of ZJUI ECE449 course. It's a batch effect corrected scETM model dealing with single cell annotation assignment. 
 
->* Coworkers
+>* Other Group Member
 >* Dataset
 >* Program Usage
 >* Batch Effect & Batch Correction Models
@@ -10,7 +10,7 @@ This project is the final project of ZJUI ECE449 course. It's a batch effect cor
 >* Discussion
 >* Reference
 
-## Coworkers' Information
+## Other Group Members' Information
 Yao Wentao - ZJUI Institute
 
 Liu Chang  - ZJUI Institute
